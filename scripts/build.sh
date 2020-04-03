@@ -3,7 +3,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
 projectFile=$(ls *.csproj)
-projectName="Formula.SimpleRepo"
+projectName=${projectFile::-7}
 version=$(sed -ne '/Version/{s/.*<Version>\(.*\)<\/Version>.*/\1/p;q;}' <<< cat "$projectFile")
 
 function listCommands() {
