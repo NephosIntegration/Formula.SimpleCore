@@ -9,8 +9,8 @@
     <Description>Core utilities for the Formula Framework</Description>
     <Authors>Joshua Williams</Authors>  
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RepositoryUrl>https://github.com/NephosIntegration/Formula.SimpleRepo</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/NephosIntegration/Formula.SimpleRepo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NephosIntegration/Formula.SimpleCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/NephosIntegration/Formula.SimpleCore</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
