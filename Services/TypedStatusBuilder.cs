@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Formula.SimpleCore
 {
-    public class StatusBuilderTyped<TData>
+    public class TypedStatusBuilder<TData>
     {
-        public StatusBuilderTyped()
+        public TypedStatusBuilder()
         {
             this.Reset();
         }
 
-        public StatusBuilderTyped<TData> Reset()
+        public TypedStatusBuilder<TData> Reset()
         {
             return this.Succeed()
                        .SetMessage(null)
@@ -22,13 +22,13 @@ namespace Formula.SimpleCore
 
         public Boolean IsSuccessful { get; set; }
 
-        public StatusBuilderTyped<TData> Succeed()
+        public TypedStatusBuilder<TData> Succeed()
         {
             this.IsSuccessful = true;
             return this;
         }
 
-        public StatusBuilderTyped<TData> Fail()
+        public TypedStatusBuilder<TData> Fail()
         {
             this.IsSuccessful = false;
             return this;
@@ -38,7 +38,7 @@ namespace Formula.SimpleCore
 
         public String Message { get; set; }
 
-        public StatusBuilderTyped<TData> SetMessage(String message)
+        public TypedStatusBuilder<TData> SetMessage(String message)
         {
             this.Message = message;
             return this;
@@ -47,7 +47,7 @@ namespace Formula.SimpleCore
 
 
         public TData Data { get; set; }
-        public StatusBuilderTyped<TData> SetData(TData data)
+        public TypedStatusBuilder<TData> SetData(TData data)
         {
             this.Data = data;
             return this;
@@ -59,13 +59,13 @@ namespace Formula.SimpleCore
 
 
         public Dictionary<String, String> Details { get; set; }
-        public StatusBuilderTyped<TData> SetDetails(Dictionary<String, String> details)
+        public TypedStatusBuilder<TData> SetDetails(Dictionary<String, String> details)
         {
             this.Details = details;
             return this;
         }
 
-        public StatusBuilderTyped<TData> RecordFailure(String message, String subject = null)
+        public TypedStatusBuilder<TData> RecordFailure(String message, String subject = null)
         {
             this.Fail().SetMessage(message);
 

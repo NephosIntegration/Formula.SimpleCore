@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Formula.SimpleCore
 {
-    public class StatusBuilder : StatusBuilderTyped<Object>
+    public class StatusBuilder : TypedStatusBuilder<Object>
     {
         public StatusBuilder() : base()
         {
