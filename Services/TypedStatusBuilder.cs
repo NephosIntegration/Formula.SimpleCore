@@ -34,6 +34,12 @@ namespace Formula.SimpleCore
             return this;
         }
 
+        public TypedStatusBuilder<TData> SetIsSuccessful(Boolean isSuccessful)
+        {
+            this.IsSuccessful = isSuccessful;
+            return this;
+        }
+
 
 
         public String Message { get; set; }
@@ -87,6 +93,24 @@ namespace Formula.SimpleCore
             }
 
             return this;
+        }
+
+        public TypedStatusBuilder<TNewData> ConvertWithDataAs<TNewData>(TNewData newData)
+        {
+            var newBuilder = new TypedStatusBuilder<TNewData>();
+
+            newBuilder.SetIsSuccessful(this.IsSuccessful)
+                      .SetMessage(this.Message)
+                      .SetData(newData)
+                      .SetDetails(this.Details);
+
+            return newBuilder;
+        }
+
+        public TypedStatusBuilder<TNewData> ConvertTo<TNewData>()
+        {
+            var newData = (TNewData)(object)this.Data; // (TNewData)Convert.ChangeType(this.Data, typeof(TNewData));
+            return this.ConvertWithDataAs<TNewData>(newData);
         }
 
     }
