@@ -22,7 +22,7 @@ namespace Formula.SimpleCore
     }
 
     [Obsolete("Move to Status instead of TypedStatusBuilder")]
-    public class StatusBuilder : StatusBase<Object>
+    public class StatusBuilder : TypedStatusBuilder<Object>
     {
         public StatusBuilder() : base()
         {

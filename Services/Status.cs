@@ -4,19 +4,14 @@ using System.Linq;
 
 namespace Formula.SimpleCore
 {
-    public class Status<TData> : StatusBase<TData>
+    public class Status<TData>
     {
-
-    }
-        
-    public class StatusBase<TData>
-    {
-        public StatusBase()
+        public Status()
         {
             this.Reset();
         }
 
-        public StatusBase<TData> Reset()
+        public Status<TData> Reset()
         {
             return this.Succeed()
                        .SetMessage(null)
@@ -27,19 +22,19 @@ namespace Formula.SimpleCore
 
         public Boolean IsSuccessful { get; set; }
 
-        public StatusBase<TData> Succeed()
+        public Status<TData> Succeed()
         {
             this.IsSuccessful = true;
             return this;
         }
 
-        public StatusBase<TData> Fail()
+        public Status<TData> Fail()
         {
             this.IsSuccessful = false;
             return this;
         }
 
-        public StatusBase<TData> SetIsSuccessful(Boolean isSuccessful)
+        public Status<TData> SetIsSuccessful(Boolean isSuccessful)
         {
             this.IsSuccessful = isSuccessful;
             return this;
@@ -49,7 +44,7 @@ namespace Formula.SimpleCore
 
         public String Message { get; set; }
 
-        public StatusBase<TData> SetMessage(String message)
+        public Status<TData> SetMessage(String message)
         {
             this.Message = message;
             return this;
@@ -58,7 +53,7 @@ namespace Formula.SimpleCore
 
 
         public TData Data { get; set; }
-        public StatusBase<TData> SetData(TData data)
+        public Status<TData> SetData(TData data)
         {
             this.Data = data;
             return this;
@@ -70,13 +65,13 @@ namespace Formula.SimpleCore
 
 
         public Dictionary<String, String> Details { get; set; }
-        public StatusBase<TData> SetDetails(Dictionary<String, String> details)
+        public Status<TData> SetDetails(Dictionary<String, String> details)
         {
             this.Details = details;
             return this;
         }
 
-        public StatusBase<TData> RecordFailure(String message, String subject = null)
+        public Status<TData> RecordFailure(String message, String subject = null)
         {
             this.Fail().SetMessage(message);
 
@@ -100,9 +95,9 @@ namespace Formula.SimpleCore
             return this;
         }
 
-        public StatusBase<TNewData> ConvertWithDataAs<TNewData>(TNewData newData)
+        public Status<TNewData> ConvertWithDataAs<TNewData>(TNewData newData)
         {
-            var newBuilder = new StatusBase<TNewData>();
+            var newBuilder = new Status<TNewData>();
 
             newBuilder.SetIsSuccessful(this.IsSuccessful)
                       .SetMessage(this.Message)
@@ -112,7 +107,7 @@ namespace Formula.SimpleCore
             return newBuilder;
         }
 
-        public StatusBase<TNewData> ConvertTo<TNewData>()
+        public Status<TNewData> ConvertTo<TNewData>()
         {
             var newData = (TNewData)(object)this.Data; // (TNewData)Convert.ChangeType(this.Data, typeof(TNewData));
             return this.ConvertWithDataAs<TNewData>(newData);
