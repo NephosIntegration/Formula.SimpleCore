@@ -4,7 +4,25 @@ using System.Linq;
 
 namespace Formula.SimpleCore
 {
-    public class StatusBuilder : TypedStatusBuilder<Object>
+
+    public static class StatusBuilderExtensions
+    {
+        [Obsolete("Move to Status instead of TypedStatusBuilder")]
+        public static Status<TData> ToStatus<TData>(this StatusBuilder legacy)
+        {
+            var status = new Status<TData>();
+
+            status.SetIsSuccessful(legacy.IsSuccessful)
+                      .SetMessage(legacy.Message)
+                      .SetData(legacy.GetDataAs<TData>())
+                      .SetDetails(legacy.Details);
+
+            return status;
+        }
+    }
+
+    [Obsolete("Move to Status instead of TypedStatusBuilder")]
+    public class StatusBuilder : StatusBase<Object>
     {
         public StatusBuilder() : base()
         {
