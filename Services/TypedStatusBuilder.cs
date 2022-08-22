@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Formula.SimpleCore
 {
@@ -22,7 +21,7 @@ namespace Formula.SimpleCore
         }
 
 
-        public Boolean IsSuccessful { get; set; }
+        public bool IsSuccessful { get; set; }
 
         public TypedStatusBuilder<TData> Succeed()
         {
@@ -36,7 +35,7 @@ namespace Formula.SimpleCore
             return this;
         }
 
-        public TypedStatusBuilder<TData> SetIsSuccessful(Boolean isSuccessful)
+        public TypedStatusBuilder<TData> SetIsSuccessful(bool isSuccessful)
         {
             this.IsSuccessful = isSuccessful;
             return this;
@@ -44,9 +43,9 @@ namespace Formula.SimpleCore
 
 
 
-        public String Message { get; set; }
+        public string Message { get; set; }
 
-        public TypedStatusBuilder<TData> SetMessage(String message)
+        public TypedStatusBuilder<TData> SetMessage(string message)
         {
             this.Message = message;
             return this;
@@ -66,18 +65,18 @@ namespace Formula.SimpleCore
         }
 
 
-        public Dictionary<String, String> Details { get; set; }
-        public TypedStatusBuilder<TData> SetDetails(Dictionary<String, String> details)
+        public Dictionary<string, string> Details { get; set; }
+        public TypedStatusBuilder<TData> SetDetails(Dictionary<string, string> details)
         {
             this.Details = details;
             return this;
         }
 
-        public TypedStatusBuilder<TData> RecordFailure(String message, String subject = null)
+        public TypedStatusBuilder<TData> RecordFailure(string message, string subject = null)
         {
             this.Fail().SetMessage(message);
 
-            if (String.IsNullOrEmpty(subject) == false)
+            if (string.IsNullOrEmpty(subject) == false)
             {
                 if (this.Details == null)
                 {

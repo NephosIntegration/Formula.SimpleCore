@@ -10,7 +10,7 @@ namespace Formula.SimpleCore
 
         protected T instance = default(T);
 
-        public ConfigLoader<T> LoadFromFile(String fileName, GetDefaults getDefaults = null)
+        public ConfigLoader<T> LoadFromFile(string fileName, GetDefaults getDefaults = null)
         {
             if (File.Exists(fileName))
             {
@@ -25,7 +25,7 @@ namespace Formula.SimpleCore
             return this;
         }
 
-        public ConfigLoader<T> SaveToFile(String fileName)
+        public ConfigLoader<T> SaveToFile(string fileName)
         {
             if (this.InstanceValid())
             {
@@ -40,9 +40,9 @@ namespace Formula.SimpleCore
             return this;
         }
 
-        protected Boolean InstanceValid(Boolean throwIfNot = true)
+        protected bool InstanceValid(bool throwIfNot = true)
         {
-            Boolean output = false;
+            bool output = false;
 
             if (this.instance == null)
             {
@@ -60,7 +60,7 @@ namespace Formula.SimpleCore
         }
 
 
-        public static ConfigLoader<T> Get(String fileName, GetDefaults getDefaults = null)
+        public static ConfigLoader<T> Get(string fileName, GetDefaults getDefaults = null)
         {
             var output = new ConfigLoader<T>();
             output.LoadFromFile(fileName, getDefaults);
