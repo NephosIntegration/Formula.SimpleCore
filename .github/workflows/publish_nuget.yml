@@ -33,7 +33,7 @@ jobs:
       run: dotnet publish -c Release
 
     - name: Copy Readme
-      run: cp README.md ./Formula.SimpleRepo/README.md
+      run: cp README.md ./Formula.SimpleCore/README.md
 
     - name: Pack
       run: dotnet pack
