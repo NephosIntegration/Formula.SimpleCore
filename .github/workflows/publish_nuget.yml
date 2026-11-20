@@ -7,6 +7,10 @@ on:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/master'
+    permissions:
+      contents: read
+      id-token: write
     environment:
       name: production
       
@@ -14,14 +18,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v6
       with:
         dotnet-version: 10.0.x
-
-    - name: Select .NET 10 SDK
-      run: dotnet new globaljson --sdk-version 10.0.100 --roll-forward latestFeature
 
     - name: Restore dependencies
       run: dotnet restore
@@ -29,16 +32,19 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
-    - name: Publish
-      run: dotnet publish -c Release
-
     - name: Copy Readme
       run: cp README.md ./Formula.SimpleCore/README.md
 
     - name: Pack
       run: dotnet pack ./Formula.SimpleCore/Formula.SimpleCore.csproj --configuration Release --no-build
 
+    - name: Log in to NuGet with OIDC
+      uses: NuGet/login@v1
+      id: nuget-login
+      with:
+        user: ${{ secrets.NUGET_USER }}
+
     - name: Publish NuGet package
       run: dotnet nuget push "./Formula.SimpleCore/bin/Release/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY"
       env:
-        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
