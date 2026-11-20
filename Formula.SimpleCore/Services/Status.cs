@@ -74,7 +74,7 @@ namespace Formula.SimpleCore
             {
                 Details ??= [];
 
-                Details.TryAdd(subject, message);
+                Details[subject] = message;
             }
 
             return this;
