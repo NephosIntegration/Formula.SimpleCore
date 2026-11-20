@@ -8,18 +8,18 @@ namespace Formula.SimpleCore
     {
         public delegate T GetDefaults();
 
-        protected T instance = default(T);
+        protected T instance = default;
 
         public ConfigLoader<T> LoadFromFile(string fileName, GetDefaults getDefaults = null)
         {
             if (File.Exists(fileName))
             {
                 var json = File.ReadAllText(fileName);
-                this.instance = JsonSerializer.Deserialize<T>(json);
+                instance = JsonSerializer.Deserialize<T>(json);
             }
             else if (getDefaults != null)
             {
-                this.instance = getDefaults();
+                instance = getDefaults();
             }
 
             return this;
@@ -27,9 +27,9 @@ namespace Formula.SimpleCore
 
         public ConfigLoader<T> SaveToFile(string fileName)
         {
-            if (this.InstanceValid())
+            if (InstanceValid())
             {
-                var json = JsonSerializer.Serialize(this.instance);
+                var json = JsonSerializer.Serialize(instance);
                 var fileStream = File.Open(fileName, FileMode.Append, FileAccess.Write);
                 var fileWriter = new StreamWriter(fileStream);
                 fileWriter.Write(json);
@@ -44,7 +44,7 @@ namespace Formula.SimpleCore
         {
             bool output = false;
 
-            if (this.instance == null)
+            if (instance == null)
             {
                 if (throwIfNot)
                 {
@@ -58,7 +58,6 @@ namespace Formula.SimpleCore
 
             return output;
         }
-
 
         public static ConfigLoader<T> Get(string fileName, GetDefaults getDefaults = null)
         {
