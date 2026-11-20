@@ -6,14 +6,14 @@ namespace Formula.SimpleCore
     {
         public Status()
         {
-            this.Reset();
+            Reset();
         }
 
         public Status<TData> Reset()
         {
-            return this.Succeed()
+            return Succeed()
                        .SetMessage(null)
-                       .SetData(default(TData))
+                       .SetData(default)
                        .SetDetails(null);
         }
 
@@ -22,72 +22,59 @@ namespace Formula.SimpleCore
 
         public Status<TData> Succeed()
         {
-            this.IsSuccessful = true;
+            IsSuccessful = true;
             return this;
         }
 
         public Status<TData> Fail()
         {
-            this.IsSuccessful = false;
+            IsSuccessful = false;
             return this;
         }
 
         public Status<TData> SetIsSuccessful(bool isSuccessful)
         {
-            this.IsSuccessful = isSuccessful;
+            IsSuccessful = isSuccessful;
             return this;
         }
-
-
 
         public string Message { get; set; }
 
         public Status<TData> SetMessage(string message)
         {
-            this.Message = message;
+            Message = message;
             return this;
         }
-
-
 
         public TData Data { get; set; }
         public Status<TData> SetData(TData data)
         {
-            this.Data = data;
+            Data = data;
             return this;
         }
+
         public TData GetData()
         {
-            return this.Data;
+            return Data;
         }
 
-
         public Dictionary<string, string> Details { get; set; }
+
         public Status<TData> SetDetails(Dictionary<string, string> details)
         {
-            this.Details = details;
+            Details = details;
             return this;
         }
 
         public Status<TData> RecordFailure(string message, string subject = null)
         {
-            this.Fail().SetMessage(message);
+            Fail().SetMessage(message);
 
-            if (string.IsNullOrEmpty(subject) == false)
+            if (!string.IsNullOrWhiteSpace(subject))
             {
-                if (this.Details == null)
-                {
-                    this.Details = new Dictionary<string, string>();
-                }
+                Details ??= [];
 
-                if (this.Details.ContainsKey(subject))
-                {
-                    this.Details[subject] = message;
-                }
-                else
-                {
-                    this.Details.Add(subject, message);
-                }
+                Details.TryAdd(subject, message);
             }
 
             return this;
@@ -97,18 +84,18 @@ namespace Formula.SimpleCore
         {
             var newBuilder = new Status<TNewData>();
 
-            newBuilder.SetIsSuccessful(this.IsSuccessful)
-                      .SetMessage(this.Message)
+            newBuilder.SetIsSuccessful(IsSuccessful)
+                      .SetMessage(Message)
                       .SetData(newData)
-                      .SetDetails(this.Details);
+                      .SetDetails(Details);
 
             return newBuilder;
         }
 
         public Status<TNewData> ConvertTo<TNewData>()
         {
-            var newData = (TNewData)(object)this.Data; // (TNewData)Convert.ChangeType(this.Data, typeof(TNewData));
-            return this.ConvertWithDataAs<TNewData>(newData);
+            var newData = (TNewData)(object)Data; // (TNewData)Convert.ChangeType(this.Data, typeof(TNewData));
+            return ConvertWithDataAs<TNewData>(newData);
         }
 
     }
